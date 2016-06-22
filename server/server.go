@@ -148,7 +148,7 @@ func RootHandler(ac auth.AccessController, ctx context.Context, trust signed.Cry
 		OperationName:       "UpdateTUF",
 		ErrorIfGUNInvalid:   invalidGUNErr,
 		ServerHandler:       handlers.AtomicUpdateHandler,
-		PermissionsRequired: []string{"push", "pull"},
+		PermissionsRequired: []string{"*"},
 	}))
 	r.Methods("GET").Path("/v2/{imageName:.*}/_trust/tuf/{tufRole:root|targets(?:/[^/\\s]+)*|snapshot|timestamp}.{checksum:[a-fA-F0-9]{64}|[a-fA-F0-9]{96}|[a-fA-F0-9]{128}}.json").Handler(createHandler(_serverEndpoint{
 		OperationName:       "GetRoleByHash",
@@ -177,7 +177,7 @@ func RootHandler(ac auth.AccessController, ctx context.Context, trust signed.Cry
 		OperationName:       "DeleteTUF",
 		ErrorIfGUNInvalid:   notFoundError,
 		ServerHandler:       handlers.DeleteHandler,
-		PermissionsRequired: []string{"push", "pull"},
+		PermissionsRequired: []string{"*"},
 	}))
 
 	r.Methods("GET").Path("/_notary_server/health").HandlerFunc(health.StatusHandler)
